@@ -2,7 +2,7 @@
 session_start();
 
 $host = 'localhost';
-$dbname = 'os_registrator';
+$dbname = 'govacation';
 $username = 'root';
 $password = '';
 
@@ -11,25 +11,27 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Erro ao conectar: " . $e->getMessage());
-}
+} 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    $stmt = $pdo->prepare("SELECT * FROM login_user WHERE email = :email");
+    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email");
     $stmt->execute(['email' => $email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($usuario) {
         if ($senha === $usuario['senha']) {
-            $_SESSION['idUser'] = $usuario['idUser'];
-            $_SESSION['tipoUser'] = $usuario['tipoUser'];
+            $_SESSION['idusuario'] = $usuario['idusuario'];
+            $_SESSION['tipousuario'] = $usuario['tipousuario'];
 
-            if ($usuario['tipoUser'] == 1) {
-                header("Location: HomeAdm.php");
-            } elseif ($usuario['tipoUser'] == 2) {
-                header("Location: HomeCliente.php");
+            if ($usuario['tipousuario'] == 1) {
+                //header("Location: HomeAdm.php");
+                echo "Tu é adm menor kkj";
+            } elseif ($usuario['tipousuario'] == 2) {
+                //header("Location: HomeCliente.php");
+                echo "Tu é cliente da boca kkj";
             } else {
                 header("Location: " . $_SERVER['PHP_SELF'] . "?Cadastro não autorizado");
             }
@@ -57,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-    <?php require 'MenuOff.php'; ?>
+    <?php //require 'MenuOff.php'; ?>
     <div class="container">
         <div class="row">
             <div class="col">
