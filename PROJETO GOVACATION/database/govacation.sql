@@ -5,11 +5,11 @@ use govacation;
 create table if not exists usuario (
     idusuario int auto_increment not null,
     tipousuario int not null,
-    senha varchar(12) not null,
-    cpf varchar(11) not null,
-    nome varchar(70) not null,
-    endereco varchar(100) not null,
     email varchar(100) not null,
+    senha varchar(12) not null,
+    nome varchar(70) not null,
+    cpf varchar(11) not null,
+    endereco varchar(100) not null,
     telefone varchar(11) not null,
 	primary key (idusuario)
 ) engine = innodb; 
@@ -38,13 +38,13 @@ create table if not exists reservas (
 	foreign key (idloc) references locacoes(idloc)
 ) engine = innodb;
 
-INSERT INTO usuario (tipousuario, senha, cpf, nome, endereco, email, telefone) VALUES
-(1, 'adm1234', '99988877766', 'Administrador', 'Ceilandia/DF', 'adm1@gmail.com', '61999008877'),
-(2, '123456789', '12345678901', 'João Silva', 'Rua das Flores, 123 - São Paulo/SP', 'joao.silva@email.com', '11987654321'),
-(2, '987654321', '98765432109', 'Maria Oliveira', 'Av. Paulista, 1000 - São Paulo/SP', 'maria.oliveira@email.com', '11912345678'),
-(2, 'vasco1234', '45678912345', 'Carlos Souza', 'Rua XV de Novembro, 50 - Curitiba/PR', 'carlos.souza@email.com', '41998765432'),
-(2, 'aninha2005', '32165498701',  'Ana Pereira', 'Rua da Praia, 200 - Florianópolis/SC', 'ana.pereira@email.com', '48912345678'),
-(2, 'pedrin777', '78912345678', 'Pedro Santos', 'Av. Brasil, 1500 - Rio de Janeiro/RJ', 'pedro.santos@email.com', '21987654321');
+INSERT INTO usuario (tipousuario, email, senha, nome, cpf, endereco, telefone) VALUES
+(1, 'adm1@gmail.com', 'adm1234',  'Administrador', '99988877766', 'Ceilandia/DF', '61999008877'),
+(2, 'joao.silva@email.com', '123456789', 'João Silva', '12345678901', 'Rua das Flores, 123 - São Paulo/SP', '11987654321'),
+(2, 'maria.oliveira@email.com', '987654321', 'Maria Oliveira', '98765432109', 'Av. Paulista, 1000 - São Paulo/SP', '11912345678'),
+(2, 'carlos.souza@email.com','vasco1234', 'Carlos Souza', '45678912345', 'Rua XV de Novembro, 50 - Curitiba/PR', '41998765432'),
+(2, 'ana.pereira@email.com', 'aninha2005', 'Ana Pereira', '32165498701', 'Rua da Praia, 200 - Florianópolis/SC', '48912345678'),
+(2, 'pedro.santos@email.com', 'pedrin777', 'Pedro Santos', '78912345678', 'Av. Brasil, 1500 - Rio de Janeiro/RJ', '21987654321');
 
 INSERT INTO locacoes (tipoloc, titulo, descr, preco, localizacao, qtdhospedes, disp) VALUES
 ('Casa', 'Casa na Praia com Vista para o Mar', 'Encantadora casa a 50m da praia, com 3 quartos, piscina e vista panorâmica', 350.00, 'Rio de Janeiro - RJ', 6, 'Disponível'),
