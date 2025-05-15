@@ -3,11 +3,11 @@
         
         private $idusuario;
         private $tipousuario;
-        private $senha;
-        private $cpf;
-        private $nome;
-        private $endereco;
         private $email;
+        private $senha;
+        private $nome;
+        private $cpf;
+        private $endereco;
         private $telefone;
 
         // GETTERS
@@ -19,31 +19,30 @@
         function getTipousuario(){
             return $this->tipousuario;
         }
+        
+        function getEmail(){
+            return $this->email;
+        }
 
         function getSenha(){
             return $this->senha;
-        }
-
-        function getCpf(){
-            return $this->cpf;
         }
 
         function getNome(){
             return $this->nome;
         }
 
-        function getEndereco(){
-            return $this->endereco;
+        function getCpf(){
+            return $this->cpf;
         }
 
-        function getEmail(){
-            return $this->email;
+        function getEndereco(){
+            return $this->endereco;
         }
 
         function getTelefone(){
             return $this->telefone;
         }
-
 
         // SETTERS
 
@@ -55,26 +54,26 @@
             $this->tipousuario = $tipousuario;
         }
 
+        function setEmail($email){
+            $this->email = $email;
+        }
+
         function setSenha($senha){
             $this->senha = $senha;
+        }
+        
+        function setNome($nome){
+            $this->nome = $nome;
         }
 
         function setCpf($cpf){
             $this->cpf = $cpf;
         }
 
-        function setNome($nome){
-            $this->nome = $nome;
-        }
-
         function setEndereco($endereco){
             $this->endereco = $endereco;
         }
     
-        function setEmail($email){
-            $this->email = $email;
-        }
-
         function setTelefone($telefone){
             $this->telefone = $telefone;
         }

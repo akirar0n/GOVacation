@@ -15,9 +15,7 @@ try {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
-    $senha = $_POST['senha'];
-
-    $hash = password_hash($senha, PASSWORD_DEFAULT);
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
     $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email");
     $stmt->execute(['email' => $email]);

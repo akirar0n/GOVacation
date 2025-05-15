@@ -8,13 +8,12 @@ class ClassUserDAO {
             $sql = "INSERT INTO usuario (tipousuario, email, senha, nome, cpf, endereco, telefone)
                     values (2,?,?,?,?,?,?)";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(1, $cadastrarUser->getTipousuario());
-            $stmt->bindValue(2, $cadastrarUser->getEmail());
-            $stmt->bindValue(3, $cadastrarUser->getSenha());
-            $stmt->bindValue(4, $cadastrarUser->getNome());
-            $stmt->bindValue(5, $cadastrarUser->getCpf());
-            $stmt->bindValue(6, $cadastrarUser->getEndereco());
-            $stmt->bindValue(7, $cadastrarUser->getTelefone());
+            $stmt->bindValue(1, $cadastrarUser->getEmail());
+            $stmt->bindValue(2, $cadastrarUser->getSenha());
+            $stmt->bindValue(3, $cadastrarUser->getNome());
+            $stmt->bindValue(4, $cadastrarUser->getCpf());
+            $stmt->bindValue(5, $cadastrarUser->getEndereco());
+            $stmt->bindValue(6, $cadastrarUser->getTelefone());
 
             $stmt->execute();
             return TRUE;
