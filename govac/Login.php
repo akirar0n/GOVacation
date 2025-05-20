@@ -15,7 +15,7 @@ try {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    $senha = $_POST['senha'];
 
     $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email");
     $stmt->execute(['email' => $email]);
@@ -27,11 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['tipousuario'] = $usuario['tipousuario'];
 
             if ($usuario['tipousuario'] == 1) {
-                //header("Location: HomeAdm.php");
-                echo "Logado como ADMINISTRADOR";
+                header("Location: Fodase.php");
             } elseif ($usuario['tipousuario'] == 2) {
-                //header("Location: HomeCliente.php");
-                echo "Logado como CLIENTE";
+                header("Location: Fodase2.php");
             } else {
                 header("Location: " . $_SERVER['PHP_SELF'] . "?Cadastro não autorizado");
             }
@@ -64,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="row">
             <div class="col">
                 <h1 class="text-form"> Entrar </h1>
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <form method="POST" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
                     <div class="formulario-login">
                         <label for="inputEmail">Email</label>
                         <input type="email" name="email" id="inputEmail" required>
@@ -79,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <?php if (isset($_GET['error'])): ?>
-        <!-- <div class="alert alert-danger mt-3"> -->
+        <div class="alert alert-danger mt-3">
             <?php
             if ($_GET['error'] == 1) {
                 echo "Email não encontrado.";

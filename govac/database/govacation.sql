@@ -6,7 +6,7 @@ create table if not exists usuario (
     idusuario int auto_increment not null,
     tipousuario int not null,
     email varchar(100) not null,
-    senha varchar(12) not null,
+    senha varchar(255) not null,
     nome varchar(70) not null,
     cpf varchar(11) not null,
     endereco varchar(100) not null,
