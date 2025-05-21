@@ -38,7 +38,7 @@ create table if not exists reservas (
 ) engine = innodb;
 
 INSERT INTO usuario (tipousuario, email, senha, nome, cpf, endereco, telefone) VALUES
-(1, 'adm1@gmail.com', 'adm1234',  'Administrador', '99988877766', 'Ceilandia/DF', '61999008877'),
+(1, 'adm1@gmail.com', 'adm777',  'Administrador', '99988877766', 'Ceilandia/DF', '61999008877'),
 (2, 'joao.silva@email.com', '123456789', 'João Silva', '12345678901', 'Rua das Flores, 123 - São Paulo/SP', '11987654321'),
 (2, 'maria.oliveira@email.com', '987654321', 'Maria Oliveira', '98765432109', 'Av. Paulista, 1000 - São Paulo/SP', '11912345678'),
 (2, 'carlos.souza@email.com','vasco1234', 'Carlos Souza', '45678912345', 'Rua XV de Novembro, 50 - Curitiba/PR', '41998765432'),
