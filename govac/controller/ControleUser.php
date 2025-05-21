@@ -30,8 +30,13 @@ switch ($acao) {
         }
         break;
 
-    default:
-        header('Location:../index.php?&MSG=Ação inválida!');
+    case 'cadastrarAdm':
+        $usuario = $classUserDAO->cadastrarAdm($novoUsuario);
+        if ($usuario >= 1) {
+            header('Location:../index.php?&MSG=Administrador cadastrado com sucesso!');
+        } else {
+            header('Location:../index.php?&MSG=Não foi possível realizar o cadastro!');
+        }
         break;
 
     case 'alterarUser':
@@ -54,6 +59,5 @@ switch ($acao) {
                 header('Location:../ListarUser.php?&MSG=Não foi possivel realizar a exclusão do cliente!');
             }
         }
-
         break;
 }
