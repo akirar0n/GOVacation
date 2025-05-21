@@ -22,6 +22,26 @@ class ClassUserDAO {
         }
     }
 
+    public function cadastrarAdm(ClassUser $cadastrarAdm) {
+        try {
+            $pdo = Conexao::getInstance();
+            $sql = "INSERT INTO usuario (tipousuario, email, senha, nome, cpf, endereco, telefone)
+                    values (1,?,?,?,?,?,?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(1, $cadastrarAdm->getEmail());
+            $stmt->bindValue(2, $cadastrarAdm->getSenha());
+            $stmt->bindValue(3, $cadastrarAdm->getNome());
+            $stmt->bindValue(4, $cadastrarAdm->getCpf());
+            $stmt->bindValue(5, $cadastrarAdm->getEndereco());
+            $stmt->bindValue(6, $cadastrarAdm->getTelefone());
+
+            $stmt->execute();
+            return TRUE;
+        } catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+
     public function buscarUser($idusuario)
     {
         try {
