@@ -48,7 +48,7 @@ switch ($acao) {
         }
         break;
 
-    case "excluirUser":
+    case 'excluirUser':
         if (isset($_GET['idusuario'])) {
             $idusuario = $_GET['idusuario'];
             $classUserDAO = new ClassUserDAO();

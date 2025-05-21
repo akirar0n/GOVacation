@@ -33,10 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // Redirecionamentos
             if ($usuario['tipousuario'] == 1) {
-                header("Location: Fodase.php");
+                header("Location: IndexAdm.php");
                 exit;
             } elseif ($usuario['tipousuario'] == 2) {
-                header("Location: Fodase2.php");
+                header("Location: IndexCliente.php");
                 exit;
             } else {
                 header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']) . "?error=3");

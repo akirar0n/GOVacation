@@ -1,10 +1,10 @@
 <?php
-
     class ClassLocs{
 
         private $idloc;
         private $tipoloc;
         private $titulo;
+        private $imagem;
         private $descr;
         private $preco;
         private $localizacao;
@@ -21,6 +21,10 @@
 
         function getTitulo(){
             return $this->titulo;
+        }
+
+        function getImagem(){
+            return $this->imagem;
         }
 
         function getDescr(){
@@ -55,6 +59,10 @@
             $this->titulo = $titulo;
         }
 
+        function setImagem($imagem){
+            $this->imagem = $imagem;
+        }
+        
         function setDescr($descr){
             $this->descr = $descr;
         }
@@ -74,5 +82,4 @@
         function setDisp($disp){
             $this->disp = $disp;
         }
-
     }
