@@ -1,4 +1,3 @@
-drop database govacation;
 create schema if not exists govacation default character set utf8;
 use govacation;
 

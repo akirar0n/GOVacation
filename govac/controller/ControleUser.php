@@ -3,8 +3,7 @@ require '../model/ClassUser.php';
 require '../model/DAO/ClassUserDAO.php';
 
 $email = $_POST['email'] ?? null;
-// $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT) ?? null;
-$senha = $_POST['senha'] ?? null;
+$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT) ?? null;
 $nome = $_POST['nome'] ?? null;
 $cpf = $_POST['cpf'] ?? null;
 $endereco = $_POST['endereco'] ?? null;
