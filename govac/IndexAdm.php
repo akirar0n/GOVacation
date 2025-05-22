@@ -183,8 +183,8 @@ if (empty($_SESSION)) {
                             <h5 class="card-title">Alterar Locação</h5>
                         </div>
                         <div class="card-body">
-                            <form class="alterar-locacoes" method = "POST" action="./controller/ControleLocs.php?ACAO=buscarLocs">
-                                <div class="row mb-3">
+                            <form class="alterar-locacoes" method = "POST" action="./controller/ControleLocs.php?ACAO=alterarLocs">
+                                <!--<div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="search-rental" class="form-label">Buscar Locação (ID)</label>
                                         <div class="input-group">
@@ -192,37 +192,36 @@ if (empty($_SESSION)) {
                                             <button class="btn btn-outline-secondary" type="button">Buscar</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="edit-client-name" class="form-label">Tipo da locação:</label>
+                                        <label for="edit-client-name" class="form-label">ID da Locação:</label>
+                                        <input type="text" class="form-control" name="idloc" id="edit-client-name" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="edit-client-name" class="form-label">Tipo da Locação:</label>
                                         <input type="text" class="form-control" name="tipoloc" id="edit-client-name" disabled>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="edit-room-number" class="form-label">Disponibilidade:</label>
-                                        <select class="form-select" id="edit-room-number" disabled>
-                                            <option value="">Selecione...</option>
-                                            <option value="Disponível">Disponível</option>
-                                            <option value="Indisponível">Indisponível</option>
-                                            <option value="Ocupado">Ocupado</option>
-                                        </select>
-                                    </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="edit-checkin-date" class="form-label">Data de Check-in</label>
-                                        <input type="date" class="form-control" id="edit-checkin-date" disabled>
+                                        <label for="edit-checkin-date" class="form-label">Titulo:</label>
+                                        <input type="text" class="form-control" 
+                                        name="titulo"
+                                        id="edit-checkin-date" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="edit-checkout-date" class="form-label">Data de Check-out</label>
-                                        <input type="date" class="form-control" id="edit-checkout-date" disabled>
+                                        <label for="edit-checkout-date" class="form-label">Link da Imagem</label>
+                                        <input type="text" class="form-control" 
+                                        name="imagem"
+                                        id="edit-checkout-date" disabled>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="edit-additional-info" class="form-label">Informações Adicionais</label>
                                     <textarea class="form-control" id="edit-additional-info" rows="3" disabled></textarea>
                                 </div>
-                                <button type="button" class="btn btn-warning" id="edit-button">Editar</button>
+                                <button type="button" class="btn btn-success" id="edit-button">Editar</button>
                                 <button type="submit" class="btn btn-success" id="save-button" style="display: none;">Salvar Alterações</button>
                                 <button type="button" class="btn btn-secondary" id="cancel-button" style="display: none;">Cancelar</button>
                             </form>
