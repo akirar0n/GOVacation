@@ -148,6 +148,10 @@
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-cadastro">Cadastrar-se</button>
                 </div>
+                <hr>
+                <div class="text-center">
+                    <a href="index.php" class="text-decoration-none">Voltar</a>
+                </div>
             </form>
         </div>
     </div>

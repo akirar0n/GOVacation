@@ -1,115 +1,12 @@
 <?php
-/* session_start();
-
-// Configurações do banco de dados
-$host = 'localhost';
-$dbname = 'govacation';
-$username = 'root';
-$password = '';
-
-// Conexão com o banco de dados
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro ao conectar: " . $e->getMessage());
-}
-
-// Processamento do formulário
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = trim($_POST['email']);
-    $senha = trim($_POST['senha']);
-
-    // Busca o usuário no banco de dados
-    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email");
-    $stmt->execute(['email' => $email]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($usuario) {
-        // Verifica a senha
-        if (password_verify($senha, $usuario['senha'])) {
-            $_SESSION['idusuario'] = $usuario['idusuario'];
-            $_SESSION['tipousuario'] = $usuario['tipousuario'];
-
-            // Redirecionamentos
-            if ($usuario['tipousuario'] == 1) {
-                header("Location: IndexAdm.php");
-                exit;
-            } elseif ($usuario['tipousuario'] == 2) {
-                header("Location: IndexCliente.php");
-                exit;
-            } else {
-                header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']) . "?error=3");
-                exit;
-            }
-        } else {
-            header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']) . "?error=2");
-            exit;
-        }
-    } else {
-        header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']) . "?error=1");
-        exit;
-    }
-}
-?> 
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - GoVacation</title>
-</head>
-
-<body>
-    <h1>Entrar</h1>
-    
-    <!-- Exibição de mensagens de erro -->
-    <?php if (isset($_GET['error'])): ?>
-        <div style="color: red; margin: 10px 0;">
-            <?php
-            switch ($_GET['error']) {
-                case 1:
-                    echo "Email não encontrado.";
-                    break;
-                case 2:
-                    echo "Senha incorreta.";
-                    break;
-                case 3:
-                    echo "Cadastro não autorizado.";
-                    break;
-                default:
-                    echo "Erro desconhecido.";
-            }
-            ?>
-        </div>
-    <?php endif; ?>
-
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-        <div>
-            <label for="inputEmail">Email</label><br>
-            <input type="email" name="email" id="inputEmail" required>
-        </div>
-        <div>
-            <label for="inputSenha">Senha</label><br>
-            <input type="password" name="senha" id="inputSenha" required>
-        </div>
-        <div>
-            <button type="submit">Entrar</button>
-        </div>
-    </form>
-</body>
-</html> */
 
 session_start();
 
-// Configurações do banco de dados
 $host = 'localhost';
 $dbname = 'govacation';
 $username = 'root';
 $password = '';
 
-// Conexão com o banco de dados
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -117,23 +14,19 @@ try {
     die("Erro ao conectar: " . $e->getMessage());
 }
 
-// Processamento do formulário
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST['email']);
     $senha = trim($_POST['senha']);
 
-    // Busca o usuário no banco de dados
     $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email");
     $stmt->execute(['email' => $email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($usuario) {
-        // Verifica a senha
         if (password_verify($senha, $usuario['senha'])) {
             $_SESSION['idusuario'] = $usuario['idusuario'];
             $_SESSION['tipousuario'] = $usuario['tipousuario'];
 
-            // Redirecionamentos
             if ($usuario['tipousuario'] == 1) {
                 header("Location: IndexAdm.php");
                 exit;
@@ -161,9 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - GoVacation</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Estilos customizados -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -197,11 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="container">
         <div class="login-container">
             <div class="login-logo">
-                <h1>GoVacation</h1>
+                <h1>GOVacation</h1>
                 <p class="text-muted">Faça login para continuar</p>
             </div>
             
-            <!-- Exibição de mensagens de erro -->
             <?php if (isset($_GET['error'])): ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <?php
@@ -236,13 +127,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <button type="submit" class="btn btn-primary btn-login">Entrar</button>
                 </div>
                 <div class="text-center">
-                    <a href="#" class="text-decoration-none">Esqueceu a senha?</a>
+                    <a href="index.php" class="text-decoration-none">Voltar</a>
                 </div>
+                <hr>
+                <div class="text-center">
+                    <a href="" class="text-decoration-none">Esqueceu a senha?</a>
+                </div>
+                
             </form>
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
+                <!-- RODAPÉ-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-title">GOVac</h5>
+                    <p>Plataforma completa para gerenciamento de propriedades para locação.</p>
+                    <div class="social-icons">
+                        <a href="https://github.com/akirar0n"><i class="bi bi-github"></i></a>
+                        <a href="https://www.linkedin.com/in/roneyvilanovadossantos/"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="footer-title">Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="IndexAdm.php"><i class="bi bi-house-door"></i> Início</a></li>
+                        <li><a href="#"><i class="bi bi-building"></i> Propriedades</a></li>
+                        <li><a href="#"><i class="bi bi-people"></i> Clientes</a></li>
+                        <li><a href="#"><i class="bi bi-file-earmark-text"></i> Relatórios</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5 class="footer-title">Contato</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt"></i> Rua Exemplo, 123 - Cidade/UF</li>
+                        <li><i class="bi bi-telephone"></i> (00) 1234-5678</li>
+                        <li><i class="bi bi-envelope"></i> contato@sistemalocacoes.com</li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="copyright">
+                <div class="container">
+                    <p class="mb-0">&copy; 2025 GOVac. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
