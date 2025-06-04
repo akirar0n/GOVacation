@@ -25,37 +25,35 @@ class ClassLocsDAO {
     }
 
     public function buscarLocs($idloc)
-    {
-        try {
-            $loc = new ClassLocs();
-            $pdo = Conexao::getInstance();
-            $sql = "SELECT tipoloc, titulo, imagem, descr, preco, localizacao, qtdhospedes, disp FROM locacoes WHERE idloc =:idloc LIMIT 1";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':idloc', $idloc);
+{
+    try {
+        $loc = new ClassLocs();
+        $pdo = Conexao::getInstance();
+        $sql = "SELECT idloc, tipoloc, titulo, imagem, descr, preco, localizacao, qtdhospedes, disp FROM locacoes WHERE idloc =:idloc LIMIT 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':idloc', $idloc);
 
-            $stmt->execute();
-            $locAssoc = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $locAssoc = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($locAssoc) {
-                $loc->getTipoloc($locAssoc['tipoloc']);
-                $loc->getTitulo($locAssoc['titulo']);
-                $loc->getImagem($locAssoc['imagem']);
-                $loc->getDescr($locAssoc['descr']);
-                $loc->getPreco($locAssoc['preco']);
-                $loc->getLocalizacao($locAssoc['localizacao']);
-                $loc->getQtdhospedes($locAssoc['qtdhospedes']);
-                $loc->getDisp($locAssoc['disp']);
+        // CORREÇÃO: Usar setters em vez de getters para atribuir valores
+        $loc->setIdloc($locAssoc['idloc']);
+        $loc->setTipoloc($locAssoc['tipoloc']);
+        $loc->setTitulo($locAssoc['titulo']);
+        $loc->setImagem($locAssoc['imagem']);
+        $loc->setDescr($locAssoc['descr']);
+        $loc->setPreco($locAssoc['preco']);
+        $loc->setLocalizacao($locAssoc['localizacao']);
+        $loc->setQtdhospedes($locAssoc['qtdhospedes']);
+        $loc->setDisp($locAssoc['disp']);
 
-                return $loc;
-            }
-
-            return $loc;
-        } catch (PDOException $exc) {
-            return $exc->getMessage();
-        }
+        return $loc;
+    } catch (PDOException $exc) {
+        return $exc->getMessage();
     }
+}
 
-    public function alterarLocs(Classlocs $altloc)
+    public function alterarLocs(ClassLocs $loc)
     {
         try {
             $pdo = Conexao::getInstance();
@@ -63,16 +61,24 @@ class ClassLocsDAO {
                     preco = ?, localizacao = ?, qtdhospedes = ?, disp = ?  
                     WHERE idloc=? ";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(1, $altloc->getTipoloc());
-            $stmt->bindValue(2, $altloc->getTitulo());
-            $stmt->bindValue(3, $altloc->getImagem());
-            $stmt->bindValue(4, $altloc->getDescr());
-            $stmt->bindValue(5, $altloc->getPreco());
-            $stmt->bindValue(6, $altloc->getLocalizacao());
-            $stmt->bindValue(7, $altloc->getQtdhospedes());
-            $stmt->bindValue(8, $altloc->getDisp());
-            $stmt->bindValue(9, $altloc->getIdloc());
-            return $stmt->rowCount();
+            
+            $stmt->bindValue(1, $loc->getTipoloc(), PDO::PARAM_STR);
+            $stmt->bindValue(2, $loc->getTitulo(), PDO::PARAM_STR);
+            $stmt->bindValue(3, $loc->getImagem(), PDO::PARAM_STR);
+            $stmt->bindValue(4, $loc->getDescr(), PDO::PARAM_STR);
+            $stmt->bindValue(5, $loc->getPreco(), PDO::PARAM_STR);
+            $stmt->bindValue(6, $loc->getLocalizacao(), PDO::PARAM_STR);
+            $stmt->bindValue(7, $loc->getQtdhospedes(), PDO::PARAM_STR);
+            $stmt->bindValue(8, $loc->getDisp(), PDO::PARAM_STR);
+            $stmt->bindValue(9, $loc->getIdloc(), PDO::PARAM_INT);
+
+            $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return true; // Retorna verdadeiro se a atualização for bem-sucedida
+        } else {
+            return false; // Nenhuma linha foi alterada
+        }
         } catch (PDOException $exc) {
             echo $exc->getMessage();
         }

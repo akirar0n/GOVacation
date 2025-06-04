@@ -1,60 +1,14 @@
-<!-- <!DOCTYPE html>
-<html lang="pt-br">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cadastro de Usuário</title>
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="card-form">
-                <div class="card-header">
-                    <h1 class="text-header">Cadastre-se</h1>
-                    <p class="subtext-header">Torne-se um cliente GOVacation!</p>
-                </div>
-                <hr>
-                <div class="card-formulario">
-                    <form class="formulario-cadastro" method="POST" action="./controller/ControleUser.php?ACAO=cadastrarUser">
-                        <label for="inputEmail">Email</label>
-                        <input type="email" name="email" id="inputEmail" required>
-                        <br>
-                        <label for="inputSenha">Senha</label>
-                        <input type="password" name="senha" id="inputSenha" required>
-                        <br>
-                        <label for="inputNome">Nome</label>
-                        <input type="text" name="nome" id="inputNome" required>
-                        <br>
-                        <label for="inputCpf">CPF</label>
-                        <input type="text" name="cpf" id="inputCpf" required>
-                        <br>
-                        <label for="inputEndereco">Endereço</label>
-                        <input type="text" name="endereco" id="inputEndereco" required>
-                        <br>
-                        <label for="inputTelefone">Telefone</label>
-                        <input type="tel" name="telefone" id="inputTelefone" required>
-                        <br>
-                        <button type="submit" class="cad-se">Cadastrar-se</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuário - GoVacation</title>
-    <!-- Bootstrap CSS -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Máscara para campos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <!-- Estilos customizados -->
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -156,18 +110,14 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Scripts de validação e máscaras -->
     <script>
-        // Máscaras para os campos
         $(document).ready(function(){
             $('#inputCpf').mask('000.000.000-00', {reverse: true});
             $('#inputTelefone').mask('(00) 00000-0000');
         });
 
-        // Validação do formulário
         (function() {
             'use strict';
             
@@ -179,7 +129,6 @@
                     event.stopPropagation();
                 }
                 
-                // Validação customizada do CPF
                 var cpf = document.getElementById('inputCpf').value.replace(/\D/g, '');
                 if (!validarCPF(cpf)) {
                     document.getElementById('inputCpf').classList.add('is-invalid');
@@ -190,7 +139,6 @@
                 form.classList.add('was-validated');
             }, false);
             
-            // Validação em tempo real
             form.querySelectorAll('.form-control').forEach(function(input) {
                 input.addEventListener('input', function() {
                     if (input.id === 'inputCpf') {
@@ -210,15 +158,12 @@
                 });
             });
             
-            // Função para validar CPF
             function validarCPF(cpf) {
                 cpf = cpf.replace(/\D/g, '');
                 if (cpf.length !== 11) return false;
                 
-                // Verifica se todos os dígitos são iguais
                 if (/^(\d)\1+$/.test(cpf)) return false;
                 
-                // Validação dos dígitos verificadores
                 let soma = 0;
                 let resto;
                 

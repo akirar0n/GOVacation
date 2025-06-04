@@ -1,3 +1,7 @@
+<?php
+    include 'IndexAdm.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +36,10 @@
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label for="imagem" class="form-label">Link da imagem:</label>
-                    <input type="url" name="imagem" class="form-control" id="imagem" required>
+                    <div class="input-icon">
+                        <i class="fas fa-image"></i>
+                        <input type="url" name="imagem" class="form-control" id="imagem" required>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label for="preco" class="form-label">Preço por dia:</label>

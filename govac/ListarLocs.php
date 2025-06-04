@@ -1,3 +1,7 @@
+<?php 
+    include 'IndexAdm.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +20,6 @@
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
     </div>
-    <div class="card-body">
-        <div class="container mt-3">
             <div class="card shadow">
                 <div class="card-body table-responsive">
                     <?php
@@ -61,7 +63,7 @@
                                 echo "<td><span class='badge " . ($loc['disp'] == 'Disponível' ? 'bg-success' : ($loc['disp'] == 'Ocupado' ? 'bg-danger' : 'bg-warning')) . "'>" . htmlspecialchars($loc['disp']) . "</span></td>";
 
                                 echo "<td class='text-nowrap'>";
-                                echo "<a href='AlterarLocs.php?id=" . htmlspecialchars($loc['idloc']) . "' class='btn btn-warning btn-sm'>";
+                                echo "<a href='AlterarLocs.php?idloc=" . $loc['idloc'] . "' class='btn btn-warning btn-sm'>";
                                 echo "<i class='bi bi-pencil'></i> Alterar";
                                 echo "</a>";
                                 echo "</td>";
@@ -81,8 +83,6 @@
                             ?>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.js"></script>

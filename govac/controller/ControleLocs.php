@@ -12,34 +12,34 @@ $qtdhospedes = $_POST['qtdhospedes'] ?? null;
 $disp = $_POST['disp'] ?? null;
 $acao = $_GET['ACAO'] ?? null;
 
-$novoLoc = new ClassLocs();
-$novoLoc->setTipoloc($tipoloc);
-$novoLoc->setTitulo($titulo);
-$novoLoc->setImagem($imagem);
-$novoLoc->setDescr($descr);
-$novoLoc->setPreco($preco);
-$novoLoc->setLocalizacao($localizacao);
-$novoLoc->setQtdhospedes($qtdhospedes);
-$novoLoc->setDisp($disp);
+$loc = new ClassLocs();
+$loc->setTipoloc($tipoloc);
+$loc->setTitulo($titulo);
+$loc->setImagem($imagem);
+$loc->setDescr($descr);
+$loc->setPreco($preco);
+$loc->setLocalizacao($localizacao);
+$loc->setQtdhospedes($qtdhospedes);
+$loc->setDisp($disp);
 
 $classLocsDAO = new ClassLocsDAO();
 
 switch ($acao) {
     case 'cadastrarLocs':
-        $loc = $classLocsDAO->cadastrarLocs($novoLoc);
-        if ($loc >= 1) {
-            header("Location:../IndexAdm.php?&MSG=Cadastro de locação realizado com sucesso!");
+        $resultado = $classLocsDAO->cadastrarLocs($loc);
+        if ($resultado >= 1) {
+            header("Location:../CadLocs.php?&MSG=Cadastro de locação realizado com sucesso!");
         } else {
-            header('Location:../IndexAdm?&MSG=Não foi possível realizar o cadastro da locação!');
+            header('Location:../CadLocs.php?&MSG=Não foi possível realizar o cadastro da locação!');
         }
         break;
 
     case 'alterarLocs':
-        $loc = $classLocsDAO->alterarLocs($loc);
-        if ($loc == 1) {
-            header('Location:../IndexAdm.php?&MSG= Cliente atualizado com sucesso!');
+        $resultado = $classLocsDAO->alterarLocs($loc);
+        if ($resultado == 1) {
+            header('Location:../ListarLocs.php?&MSG= Locação atualizada com sucesso!');
         } else {
-            header('Location:../IndexAdm.php?&MSG= Não foi possível atualizar os dados do cliente!');
+            header('Location:../ListarLocs.php?&MSG= Não foi possível atualizar a locação!');
         }
         break;
 
@@ -47,11 +47,11 @@ switch ($acao) {
         if (isset($_GET['idloc'])) {
             $idloc = $_GET['idloc'];
             $classLocsDAO = new ClassLocsDAO();
-            $loc = $classLocsDAO->excluirLocs($idloc);
-            if ($loc == TRUE) {
-                header('Location:../IndexAdm.php?&MSG= Cliente excluido com sucesso!');
+            $resultado = $classLocsDAO->excluirLocs($idloc);
+            if ($resultado == TRUE) {
+                header('Location:../ListarLocs.php?&MSG= Locação excluida com sucesso!');
             } else {
-                header('Location:../IndexAdm.php?&MSG=Não foi possivel realizar a exclusão do cliente!');
+                header('Location:../ListarLocs.php?&MSG=Não foi possivel realizar a exclusão da locação!');
             }
         }
         break; 
