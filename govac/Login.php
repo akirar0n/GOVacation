@@ -129,10 +129,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="text-center">
                     <a href="index.php" class="text-decoration-none">Voltar</a>
                 </div>
-                <hr>
-                <div class="text-center">
-                    <a href="" class="text-decoration-none">Esqueceu a senha?</a>
-                </div>
                 
             </form>
         </div>

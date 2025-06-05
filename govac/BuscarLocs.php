@@ -202,5 +202,6 @@ include 'IndexCliente.php';
             'albumLabel': 'Imagem %1 de %2'
         });
     </script>
+    <?php include 'footer.php';?>
 </body>
 </html>

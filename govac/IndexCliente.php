@@ -60,11 +60,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Gerenciamento.php">
-                            <i class="bi bi-person-gear"></i> Gerenciar Perfil
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="logout.php">
                             <i class="bi bi-door-open"></i> Sair
                         </a>

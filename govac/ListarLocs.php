@@ -143,48 +143,37 @@ include 'IndexAdm.php';
                 foreach ($loc as $locacao) {
                     echo '<tr>';
                     
-                    // Coluna ID
                     echo '<td class="ps-4">' . htmlspecialchars($locacao['idloc']) . '</td>';
                     
-                    // Coluna Tipo
                     echo '<td>' . htmlspecialchars($locacao['tipoloc']) . '</td>';
                     
-                    // Coluna Título
                     echo '<td>' . htmlspecialchars($locacao['titulo']) . '</td>';
                     
-                    // Coluna Imagem
                     echo '<td>';
                     echo '<a href="' . htmlspecialchars($locacao['imagem']) . '" data-lightbox="image-' . htmlspecialchars($locacao['idloc']) . '" data-title="' . htmlspecialchars($locacao['titulo']) . '">';
                     echo '<img src="' . htmlspecialchars($locacao['imagem']) . '" class="img-thumbnail">';
                     echo '</a>';
                     echo '</td>';
                     
-                    // Coluna Descrição
                     echo '<td class="text-truncate" style="max-width: 200px;">' . htmlspecialchars($locacao['descr']) . '</td>';
                     
-                    // Coluna Preço
                     echo '<td class="price-tag">R$ ' . number_format($locacao['preco'], 2, ',', '.') . '</td>';
                     
-                    // Coluna Localização
                     echo '<td>' . htmlspecialchars($locacao['localizacao']) . '</td>';
                     
-                    // Coluna Hóspedes
                     echo '<td>' . htmlspecialchars($locacao['qtdhospedes']) . '</td>';
                     
-                    // Coluna Status
                     echo '<td>';
                     $badgeClass = ($locacao['disp'] == 'Disponível') ? 'bg-success' : (($locacao['disp'] == 'Ocupado') ? 'bg-danger' : 'bg-warning');
                     echo '<span class="badge ' . $badgeClass . '">' . htmlspecialchars($locacao['disp']) . '</span>';
                     echo '</td>';
                     
-                    // Coluna Alterar
                     echo '<td class="text-center">';
                     echo '<a href="AlterarLocs.php?idloc=' . $locacao['idloc'] . '" class="btn btn-alterar btn-sm">';
                     echo '<i class="bi bi-pencil"></i> Alterar';
                     echo '</a>';
                     echo '</td>';
                     
-                    // Coluna Excluir
                     echo '<td class="text-center pe-4">';
                     echo '<a href="controller/ControleLocs.php?ACAO=excluirLocs&idloc=' . htmlspecialchars($locacao['idloc']) . '" class="btn btn-excluir btn-sm" onclick="return confirm(\'Tem certeza que deseja excluir esta locação?\');">';
                     echo '<i class="bi bi-trash"></i> Excluir';
@@ -202,16 +191,15 @@ include 'IndexAdm.php';
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
     <script>
-        // Configuração do Lightbox
         lightbox.option({
             'resizeDuration': 200,
             'wrapAround': true,
             'albumLabel': 'Imagem %1 de %2'
         });
     </script>
+    <?php include 'footer.php';?>
 </body>
 </html>
