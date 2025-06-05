@@ -147,6 +147,8 @@ include 'IndexAdm.php';
         <div class="card-form-container">
             <form method="POST" action="./controller/ControleLocs.php?ACAO=alterarLocs">
                 <h1 class="form-title">Alterar Locações</h1>
+                <input type="hidden" name="idloc" value="<?php echo htmlspecialchars($loc->getIdloc()); ?>">
+                
 
                 <div class="form-group">
                     <label for="tipoloc" class="form-label">Tipo loc</label>

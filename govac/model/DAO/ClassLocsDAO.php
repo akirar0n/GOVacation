@@ -71,16 +71,14 @@ class ClassLocsDAO {
             $stmt->bindValue(8, $loc->getDisp(), PDO::PARAM_STR);
             $stmt->bindValue(9, $loc->getIdloc(), PDO::PARAM_INT);
 
+            // Apenas execute. Se não houver erro, considere sucesso.
             $stmt->execute();
+            return true; // Retorna true se a execução for bem-sucedida
 
-        if ($stmt->rowCount() > 0) {
-            return true; 
-        } else {
-            return false;
-        }
-        } catch (PDOException $exc) {
-            echo $exc->getMessage();
-        }
+            } catch (PDOException $exc) {
+                echo $exc->getMessage();
+                return false; // Retorna false se ocorrer uma exceção
+            }
     }
 
     public function listarLocs()

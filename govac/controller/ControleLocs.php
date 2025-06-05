@@ -2,7 +2,7 @@
 require '../model/ClassLocs.php';
 require '../model/DAO/ClassLocsDAO.php';
 
-$tipoloc = $_POST['tipoloc'] ?? null;
+$idloc_from_post = $_POST['idloc'] ?? null; 
 $titulo = $_POST['titulo'] ?? null;
 $imagem = $_POST['imagem'] ?? null;
 $descr = $_POST['descr'] ?? null;
@@ -13,6 +13,10 @@ $disp = $_POST['disp'] ?? null;
 $acao = $_GET['ACAO'] ?? null;
 
 $loc = new ClassLocs();
+
+if ($acao == 'alterarLocs' && $idloc_from_post !== null) { 
+}
+
 $loc->setTipoloc($tipoloc);
 $loc->setTitulo($titulo);
 $loc->setImagem($imagem);
