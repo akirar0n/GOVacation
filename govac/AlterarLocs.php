@@ -1,10 +1,7 @@
 <?php
-session_start();
-if (empty($_SESSION)) {
-    print "<script>location.href='ListarLocs.php';</script>";
-}
-
 include 'IndexAdm.php';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -151,18 +148,9 @@ include 'IndexAdm.php';
             <form method="POST" action="./controller/ControleLocs.php?ACAO=alterarLocs">
                 <h1 class="form-title">Alterar Locações</h1>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="idloc" name="idloc" value="<?php echo htmlspecialchars($loc->getIdloc()); ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="tipoloc" class="form-label">Tipo loc</label>
-                            <input type="text" class="form-control" id="tipoloc" name="tipoloc" value="<?php echo htmlspecialchars($loc->getTipoloc()); ?>">
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="tipoloc" class="form-label">Tipo loc</label>
+                    <input type="text" class="form-control" id="tipoloc" name="tipoloc" value="<?php echo htmlspecialchars($loc->getTipoloc()); ?>">
                 </div>
                 
                 <div class="form-group">
@@ -214,8 +202,8 @@ include 'IndexAdm.php';
                         <div class="form-group">
                             <label for="disp" class="form-label">Disponibilidade</label>
                             <select class="form-control" id="disp" name="disp">
-                                <option value="1" <?php echo $loc->getDisp() == 1 ? 'selected' : ''; ?>>Disponível</option>
-                                <option value="0" <?php echo $loc->getDisp() == 0 ? 'selected' : ''; ?>>Indisponível</option>
+                                <option value="1" <?php echo htmlspecialchars($loc->getDisp()) == 1 ? 'selected' : ''; ?>>Disponível</option>
+                                <option value="0" <?php echo htmlspecialchars($loc->getDisp()) == 0 ? 'selected' : ''; ?>>Indisponível</option>
                             </select>
                         </div>
                     </div>

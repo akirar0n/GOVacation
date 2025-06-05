@@ -22,6 +22,10 @@ if (!empty($_SESSION['email']) && $_SESSION['tipousuario'] == 1) {
     <style>
         .navbar-brand {
             font-weight: bold;
+            margin-right: 0; 
+        }
+        .navbar-nav {
+            margin-left: auto; 
         }
         .navbar {
             padding: 0.5rem 1rem;
@@ -35,6 +39,27 @@ if (!empty($_SESSION['email']) && $_SESSION['tipousuario'] == 1) {
         .nav-link i {
             margin-right: 0.5rem;
         }
+
+        body {
+            background-image: url('assets/img/sideimage.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background-color: rgba(33, 37, 41, 0.9) !important;
+            backdrop-filter: blur(5px);
+        }
+        
+        .admin-panel {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -45,31 +70,27 @@ if (!empty($_SESSION['email']) && $_SESSION['tipousuario'] == 1) {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="CadLocs.php" id="new-rental-link">
-                            <i class="bi bi-plus-circle"></i> Nova Locação
+                            <i class="bi bi-house-add"></i> Nova Locação
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ListarLocs.php" id="edit-rental-link">
-                            <i class="bi bi-pencil-square"></i> Manter locação
+                            <i class="bi bi-list-check"></i> Manter Locação
                         </a>
                     </li>
-                    <li class="nav-item ms-lg-auto">
+                    <li class="nav-item">
                         <a class="nav-link" href="logout.php">
-                            <i class="bi bi-box-arrow-left"></i> Log-out
+                            <i class="bi bi-door-open"></i> Sair
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <div class="container-fluid mt-3">
-        <!-- Conteúdo principal do site vai aqui -->
-    </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.js"></script>
 </body>

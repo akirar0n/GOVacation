@@ -22,11 +22,11 @@ $loc->setLocalizacao($localizacao);
 $loc->setQtdhospedes($qtdhospedes);
 $loc->setDisp($disp);
 
-$classLocsDAO = new ClassLocsDAO();
+$ClassLocsDAO = new ClassLocsDAO();
 
 switch ($acao) {
     case 'cadastrarLocs':
-        $resultado = $classLocsDAO->cadastrarLocs($loc);
+        $resultado = $ClassLocsDAO->cadastrarLocs($loc);
         if ($resultado >= 1) {
             header("Location:../CadLocs.php?&MSG=Cadastro de locação realizado com sucesso!");
         } else {
@@ -35,7 +35,7 @@ switch ($acao) {
         break;
 
     case 'alterarLocs':
-        $resultado = $classLocsDAO->alterarLocs($loc);
+        $resultado = $ClassLocsDAO->alterarLocs($loc);
         if ($resultado == 1) {
             header('Location:../ListarLocs.php?&MSG= Locação atualizada com sucesso!');
         } else {

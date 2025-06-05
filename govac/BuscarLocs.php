@@ -1,5 +1,5 @@
-<?php 
-include 'IndexAdm.php';
+<?php
+include 'IndexCliente.php';
 ?>
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@ include 'IndexAdm.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manter Locações - GOVacation</title>
+    <title>Buscar Locações - GOVacation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
@@ -21,10 +21,9 @@ include 'IndexAdm.php';
             --light-text: #ecf0f1;
         }
         
-        body {
-            background-color: var(--light-bg);
-            color: var(--dark-text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
         }
         
         .search-header {
@@ -70,28 +69,27 @@ include 'IndexAdm.php';
             color: var(--accent-color);
         }
         
-        .btn-alterar {
-            background-color: #f39c12;
+        .btn-reserva {
+            background-color: var(--secondary-color);
             border: none;
             font-weight: 500;
             color: white;
         }
         
-        .btn-alterar:hover {
-            background-color: #e67e22;
+        .btn-reserva:hover {
+            background-color: #2980b9;
             color: white;
         }
         
-        .btn-excluir {
-            background-color: var(--accent-color);
-            border: none;
-            font-weight: 500;
-            color: white;
+        .whatsapp-btn {
+            color: #25D366;
+            font-size: 1.5rem;
+            transition: transform 0.2s;
         }
         
-        .btn-excluir:hover {
-            background-color: #c0392b;
-            color: white;
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            color: #128C7E;
         }
         
         @media (max-width: 768px) {
@@ -111,31 +109,29 @@ include 'IndexAdm.php';
     </style>
 </head>
 <body>
-    <div class="container-fluid px-0">
-        
         <div class="container py-4">
             <div class="table-container">
                 <?php
                 require './model/ClassLocs.php';
                 require './model/DAO/ClassLocsDAO.php';
+                require './model/ClassRes.php';
+                require './model/DAO/ClassResDAO.php';
 
-                $classLocsDAO = new ClassLocsDAO();
-                $loc = $classLocsDAO->listarLocs();
+                $ClassLocsDAO = new ClassLocsDAO();
+                $loc = $ClassLocsDAO->listarLocs();
 
                 echo '<div class="table-responsive">';
                 echo '<table class="table table-hover align-middle">';
                 echo '<thead>';
                 echo '<tr>';
-                echo '<th scope="col" class="ps-4">ID</th>';
+                echo '<th scope="col" class="ps-4">Propriedade</th>';
                 echo '<th scope="col">Tipo</th>';
-                echo '<th scope="col">Título</th>';
-                echo '<th scope="col">Imagem</th>';
-                echo '<th scope="col">Descrição</th>';
-                echo '<th scope="col">Preço</th>';
                 echo '<th scope="col">Localização</th>';
                 echo '<th scope="col">Hóspedes</th>';
+                echo '<th scope="col">Preço</th>';
                 echo '<th scope="col">Status</th>';
-                echo '<th scope="col" colspan="2" class="text-center">Ações</th>';
+                echo '<th scope="col">Ação</th>';
+                echo '<th scope="col" class="pe-4">Contato</th>';
                 echo '</tr>';
                 echo '</thead>';
                 echo '<tbody>';
@@ -143,51 +139,46 @@ include 'IndexAdm.php';
                 foreach ($loc as $locacao) {
                     echo '<tr>';
                     
-                    // Coluna ID
-                    echo '<td class="ps-4">' . htmlspecialchars($locacao['idloc']) . '</td>';
-                    
-                    // Coluna Tipo
-                    echo '<td>' . htmlspecialchars($locacao['tipoloc']) . '</td>';
-                    
-                    // Coluna Título
-                    echo '<td>' . htmlspecialchars($locacao['titulo']) . '</td>';
-                    
-                    // Coluna Imagem
-                    echo '<td>';
-                    echo '<a href="' . htmlspecialchars($locacao['imagem']) . '" data-lightbox="image-' . htmlspecialchars($locacao['idloc']) . '" data-title="' . htmlspecialchars($locacao['titulo']) . '">';
+                    echo '<td class="ps-4">';
+                    echo '<div class="d-flex align-items-center">';
+                    echo '<a href="' . htmlspecialchars($locacao['imagem']) . '" data-lightbox="image-' . htmlspecialchars($locacao['idloc']) . '" data-title="' . htmlspecialchars($locacao['titulo']) . '" class="me-3">';
                     echo '<img src="' . htmlspecialchars($locacao['imagem']) . '" class="img-thumbnail">';
                     echo '</a>';
+                    echo '<div>';
+                    echo '<h6 class="mb-0">' . htmlspecialchars($locacao['titulo']) . '</h6>';
+                    echo '<small class="text-muted">' . htmlspecialchars(substr($locacao['descr'], 0, 30)) . '...</small>';
+                    echo '</div>';
+                    echo '</div>';
                     echo '</td>';
                     
-                    // Coluna Descrição
-                    echo '<td class="text-truncate" style="max-width: 200px;">' . htmlspecialchars($locacao['descr']) . '</td>';
-                    
-                    // Coluna Preço
-                    echo '<td class="price-tag">R$ ' . number_format($locacao['preco'], 2, ',', '.') . '</td>';
-                    
-                    // Coluna Localização
+                    echo '<td>' . htmlspecialchars($locacao['tipoloc']) . '</td>';
+
                     echo '<td>' . htmlspecialchars($locacao['localizacao']) . '</td>';
                     
-                    // Coluna Hóspedes
                     echo '<td>' . htmlspecialchars($locacao['qtdhospedes']) . '</td>';
                     
-                    // Coluna Status
+                    echo '<td class="price-tag">R$ ' . number_format($locacao['preco'], 2, ',', '.') . '</td>';
+                    
                     echo '<td>';
                     $badgeClass = ($locacao['disp'] == 'Disponível') ? 'bg-success' : (($locacao['disp'] == 'Ocupado') ? 'bg-danger' : 'bg-warning');
                     echo '<span class="badge ' . $badgeClass . '">' . htmlspecialchars($locacao['disp']) . '</span>';
                     echo '</td>';
                     
-                    // Coluna Alterar
-                    echo '<td class="text-center">';
-                    echo '<a href="AlterarLocs.php?idloc=' . $locacao['idloc'] . '" class="btn btn-alterar btn-sm">';
-                    echo '<i class="bi bi-pencil"></i> Alterar';
-                    echo '</a>';
+                    echo '<td>';
+                    if ($locacao['disp'] == 'Disponível') {
+                        echo '<a href="https://nubank.com.br/cobrar/1dkdn3/6840dbaa-e796-4019-9a49-b05e033ed25b?idloc=' . htmlspecialchars($locacao['idloc']) . '" class="btn btn-reserva btn-sm">';
+                        echo '<i class="bi bi-calendar-check me-1"></i> Reservar';
+                        echo '</a>';
+                    } else {
+                        echo '<button class="btn btn-outline-secondary btn-sm" disabled>';
+                        echo '<i class="bi bi-calendar-x me-1"></i> Indisponível';
+                        echo '</button>';
+                    }
                     echo '</td>';
                     
-                    // Coluna Excluir
-                    echo '<td class="text-center pe-4">';
-                    echo '<a href="controller/ControleLocs.php?ACAO=excluirLocs&idloc=' . htmlspecialchars($locacao['idloc']) . '" class="btn btn-excluir btn-sm" onclick="return confirm(\'Tem certeza que deseja excluir esta locação?\');">';
-                    echo '<i class="bi bi-trash"></i> Excluir';
+                    echo '<td class="pe-4 text-center">';
+                    echo '<a href="https://wa.me/5561995008900" class="whatsapp-btn">';
+                    echo '<i class="bi bi-whatsapp"></i>';
                     echo '</a>';
                     echo '</td>';
                     
@@ -202,11 +193,9 @@ include 'IndexAdm.php';
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
     <script>
-        // Configuração do Lightbox
         lightbox.option({
             'resizeDuration': 200,
             'wrapAround': true,

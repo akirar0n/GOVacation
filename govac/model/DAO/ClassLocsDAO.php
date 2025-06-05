@@ -36,7 +36,6 @@ class ClassLocsDAO {
         $stmt->execute();
         $locAssoc = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // CORREÇÃO: Usar setters em vez de getters para atribuir valores
         $loc->setIdloc($locAssoc['idloc']);
         $loc->setTipoloc($locAssoc['tipoloc']);
         $loc->setTitulo($locAssoc['titulo']);
@@ -75,9 +74,9 @@ class ClassLocsDAO {
             $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            return true; // Retorna verdadeiro se a atualização for bem-sucedida
+            return true; 
         } else {
-            return false; // Nenhuma linha foi alterada
+            return false;
         }
         } catch (PDOException $exc) {
             echo $exc->getMessage();

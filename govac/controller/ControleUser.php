@@ -18,11 +18,11 @@ $novoUsuario->setCpf($cpf);
 $novoUsuario->setEndereco($endereco);
 $novoUsuario->setTelefone($telefone);
 
-$classUserDAO = new ClassUserDAO();
+$ClassUserDAO = new ClassUserDAO();
 
 switch ($acao) {
     case 'cadastrarUser':
-        $usuario = $classUserDAO->cadastrarUser($novoUsuario);
+        $usuario = $ClassUserDAO->cadastrarUser($novoUsuario);
         if ($usuario >= 1) {
             header('Location:../index.php?&MSG=Cadastro realizado com sucesso!');
         } else {
@@ -31,7 +31,7 @@ switch ($acao) {
         break;
 
     case 'cadastrarAdm':
-        $usuario = $classUserDAO->cadastrarAdm($novoUsuario);
+        $usuario = $ClassUserDAO->cadastrarAdm($novoUsuario);
         if ($usuario >= 1) {
             header('Location:../index.php?&MSG=Administrador cadastrado com sucesso!');
         } else {
@@ -40,7 +40,7 @@ switch ($acao) {
         break;
 
     case 'alterarUser':
-        $usuario = $classUserDAO->alterarUser($usuario);
+        $usuario = $ClassUserDAO->alterarUser($usuario);
         if ($usuario == 1) {
             header('Location:../ListarUser.php?&MSG= Cliente atualizado com sucesso!');
         } else {
@@ -51,8 +51,8 @@ switch ($acao) {
     case 'excluirUser':
         if (isset($_GET['idusuario'])) {
             $idusuario = $_GET['idusuario'];
-            $classUserDAO = new ClassUserDAO();
-            $usuario = $classUserDAO->excluirUser($idusuario);
+            $ClassUserDAO = new ClassUserDAO();
+            $usuario = $ClassUserDAO->excluirUser($idusuario);
             if ($usuario == TRUE) {
                 header('Location:../ListarUser.php?&MSG= Cliente excluido com sucesso!');
             } else {
