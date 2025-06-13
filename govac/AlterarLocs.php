@@ -214,7 +214,7 @@ include 'IndexAdm.php';
                 <button type="submit" class="btn btn-primary btn-submit">
                     <i class="fas fa-save me-2"></i>Salvar Alterações
                 </button>
-                <a href="IndexAdm.php" class="btn btn-light btn-sm">
+                <a href="ListarLocs.php" class="btn btn-light btn-sm">
             <i class="bi bi-arrow-left"></i> Voltar
         </a>
             </form>
