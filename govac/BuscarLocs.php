@@ -166,7 +166,7 @@ include 'IndexCliente.php';
                     
                     echo '<td>';
                     if ($locacao['disp'] == 'Disponível') {
-                        echo '<a href="https://nubank.com.br/cobrar/1dkdn3/6840dbaa-e796-4019-9a49-b05e033ed25b?idloc=' . htmlspecialchars($locacao['idloc']) . '" class="btn btn-reserva btn-sm">';
+echo '<a href="gerar_pagamento.php?idloc=' . htmlspecialchars($locacao['idloc']) . '" class="btn btn-reserva btn-sm">';
                         echo '<i class="bi bi-calendar-check me-1"></i> Reservar';
                         echo '</a>';
                     } else {
