@@ -36,8 +36,11 @@ $paymentData = [
     ]],
     'back_urls' => [
         'success' => 'https://4300-191-223-221-143.ngrok-free.app//Projeto-GOVacation/govac/reserva_sucesso.php',
+        // INSERIR LINK NOVO DO NGROK TODA VEZ QUE INICIAR ELE
         'failure' => 'https://4300-191-223-221-143.ngrok-free.app//Projeto-GOVacation/govac/reserva_falha.php',
+        // INSERIR LINK NOVO DO NGROK TODA VEZ QUE INICIAR ELE
         'pending' => 'https://4300-191-223-221-143.ngrok-free.app//Projeto-GOVacation/govac/reserva_pendente.php'
+        // INSERIR LINK NOVO DO NGROK TODA VEZ QUE INICIAR ELE
     ],
     'notification_url' => 'https://4300-191-223-221-143.ngrok-free.app/Projeto-GOVacation/govac/confirmar_pagamento.php', 
         // INSERIR LINK NOVO DO NGROK TODA VEZ QUE INICIAR ELE
