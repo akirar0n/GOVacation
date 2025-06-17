@@ -1,5 +1,17 @@
 <?php
 include 'IndexCliente.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (empty($_SESSION['idusuario'])) {
+    header('Location: Login.php');
+    exit();
+}
+
+require './model/DAO/ClassLocsDAO.php';
+$classLocsDAO = new ClassLocsDAO();
+$locacoes = $classLocsDAO->listarLocs();
 ?>
 
 <!DOCTYPE html>
@@ -8,200 +20,95 @@ include 'IndexCliente.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar Locações - GOVacation</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-bg: #f8f9fa;
-            --dark-text: #2c3e50;
-            --light-text: #ecf0f1;
+        body {
+            background-color: #f8f9fa;
         }
-        
-        .navbar-brand {
-            font-weight: 700;
-            color: var(--primary-color) !important;
-        }
-        
-        .search-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .table-container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            padding: 0;
+        .property-card {
+            border: none;
+            border-radius: 15px;
             overflow: hidden;
-        }
-        
-        .table thead th {
-            background-color: var(--primary-color);
-            color: white;
-            border-bottom: none;
-            vertical-align: middle;
-        }
-        
-        .table-hover tbody tr:hover {
-            background-color: rgba(52, 152, 219, 0.1);
-        }
-        
-        .img-thumbnail {
-            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             transition: all 0.3s ease;
-            width: 80px;
-            height: 60px;
+        }
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+        }
+        .property-card-img {
+            height: 220px;
             object-fit: cover;
         }
-        
-        .img-thumbnail:hover {
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
+        .property-card .card-body {
+            padding: 1.5rem;
         }
-        
         .price-tag {
-            font-weight: 700;
-            color: var(--accent-color);
-        }
-        
-        .btn-reserva {
-            background-color: var(--secondary-color);
-            border: none;
-            font-weight: 500;
-            color: white;
-        }
-        
-        .btn-reserva:hover {
-            background-color: #2980b9;
-            color: white;
-        }
-        
-        .whatsapp-btn {
-            color: #25D366;
             font-size: 1.5rem;
-            transition: transform 0.2s;
+            font-weight: 700;
+            color: #0d6efd;
         }
-        
-        .whatsapp-btn:hover {
-            transform: scale(1.1);
-            color: #128C7E;
+        .price-tag small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #6c757d;
         }
-        
-        @media (max-width: 768px) {
-            .table-responsive {
-                border-radius: 0;
-            }
-            
-            .search-header h5 {
-                font-size: 1.2rem;
-            }
-            
-            .img-thumbnail {
-                width: 60px;
-                height: 45px;
-            }
+        .icon-text {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 1.5rem;
+            color: #6c757d;
+        }
+        .icon-text i {
+            margin-right: 0.5rem;
         }
     </style>
 </head>
 <body>
-        <div class="container py-4">
-            <div class="table-container">
-                <?php
-                require './model/ClassLocs.php';
-                require './model/DAO/ClassLocsDAO.php';
-                require './model/ClassRes.php';
-                require './model/DAO/ClassResDAO.php';
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">Encontre sua Próxima Aventura</h1>
+        <div class="row g-4">
+            <?php foreach ($locacoes as $loc): ?>
+            <div class="col-md-6 col-lg-4">
+                <div class="card property-card h-100">
+                    <img src="<?php echo htmlspecialchars($loc['imagem']); ?>" class="card-img-top property-card-img" alt="<?php echo htmlspecialchars($loc['titulo']); ?>">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title"><?php echo htmlspecialchars($loc['titulo']); ?></h5>
+                        <p class="card-text text-muted flex-grow-1"><?php echo htmlspecialchars($loc['descr']); ?></p>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="icon-text" title="Tipo">
+                                <i class="bi bi-tag-fill"></i> <?php echo htmlspecialchars($loc['tipoloc']); ?>
+                            </div>
+                            <div class="icon-text" title="Localização">
+                                <i class="bi bi-geo-alt-fill"></i> <?php echo htmlspecialchars($loc['localizacao']); ?>
+                            </div>
+                            <div class="icon-text" title="Hóspedes">
+                                <i class="bi bi-people-fill"></i> <?php echo htmlspecialchars($loc['qtdhospedes']); ?>
+                            </div>
+                        </div>
 
-                $ClassLocsDAO = new ClassLocsDAO();
-                $loc = $ClassLocsDAO->listarLocs();
-
-                echo '<div class="table-responsive">';
-                echo '<table class="table table-hover align-middle">';
-                echo '<thead>';
-                echo '<tr>';
-                echo '<th scope="col" class="ps-4">Propriedade</th>';
-                echo '<th scope="col">Tipo</th>';
-                echo '<th scope="col">Localização</th>';
-                echo '<th scope="col">Hóspedes</th>';
-                echo '<th scope="col">Preço</th>';
-                echo '<th scope="col">Status</th>';
-                echo '<th scope="col">Ação</th>';
-                echo '<th scope="col" class="pe-4">Contato</th>';
-                echo '</tr>';
-                echo '</thead>';
-                echo '<tbody>';
-
-                foreach ($loc as $locacao) {
-                    echo '<tr>';
-                    
-                    echo '<td class="ps-4">';
-                    echo '<div class="d-flex align-items-center">';
-                    echo '<a href="' . htmlspecialchars($locacao['imagem']) . '" data-lightbox="image-' . htmlspecialchars($locacao['idloc']) . '" data-title="' . htmlspecialchars($locacao['titulo']) . '" class="me-3">';
-                    echo '<img src="' . htmlspecialchars($locacao['imagem']) . '" class="img-thumbnail">';
-                    echo '</a>';
-                    echo '<div>';
-                    echo '<h6 class="mb-0">' . htmlspecialchars($locacao['titulo']) . '</h6>';
-                    echo '<small class="text-muted">' . htmlspecialchars(substr($locacao['descr'], 0, 30)) . '...</small>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</td>';
-                    
-                    echo '<td>' . htmlspecialchars($locacao['tipoloc']) . '</td>';
-
-                    echo '<td>' . htmlspecialchars($locacao['localizacao']) . '</td>';
-                    
-                    echo '<td>' . htmlspecialchars($locacao['qtdhospedes']) . '</td>';
-                    
-                    echo '<td class="price-tag">R$ ' . number_format($locacao['preco'], 2, ',', '.') . '</td>';
-                    
-                    echo '<td>';
-                    $badgeClass = ($locacao['disp'] == 'Disponível') ? 'bg-success' : (($locacao['disp'] == 'Ocupado') ? 'bg-danger' : 'bg-warning');
-                    echo '<span class="badge ' . $badgeClass . '">' . htmlspecialchars($locacao['disp']) . '</span>';
-                    echo '</td>';
-                    
-                    echo '<td>';
-                    if ($locacao['disp'] == 'Disponível') {
-echo '<a href="gerar_pagamento.php?idloc=' . htmlspecialchars($locacao['idloc']) . '" class="btn btn-reserva btn-sm">';
-                        echo '<i class="bi bi-calendar-check me-1"></i> Reservar';
-                        echo '</a>';
-                    } else {
-                        echo '<button class="btn btn-outline-secondary btn-sm" disabled>';
-                        echo '<i class="bi bi-calendar-x me-1"></i> Indisponível';
-                        echo '</button>';
-                    }
-                    echo '</td>';
-                    
-                    echo '<td class="pe-4 text-center">';
-                    echo '<a href="https://wa.me/5561995008900" class="whatsapp-btn">';
-                    echo '<i class="bi bi-whatsapp"></i>';
-                    echo '</a>';
-                    echo '</td>';
-                    
-                    echo '</tr>';
-                }
-                
-                echo '</tbody>';
-                echo '</table>';
-                echo '</div>';
-                ?>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <div class="price-tag">
+                                R$<?php echo number_format($loc['preco'], 2, ',', '.'); ?><small>/noite</small>
+                            </div>
+                            <?php if ($loc['disp'] == 'Disponível'): ?>
+                                <a href="gerar_pagamento.php?idloc=<?php echo htmlspecialchars($loc['idloc']); ?>" class="btn btn-primary">
+                                    <i class="bi bi-calendar-check me-1"></i> Reservar
+                                </a>
+                            <?php else: ?>
+                                <button class="btn btn-outline-secondary" disabled>Indisponível</button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <?php endforeach; ?>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-    <script>
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true,
-            'albumLabel': 'Imagem %1 de %2'
-        });
-    </script>
-    <?php include 'footer.php';?>
+    
+    <?php include 'footer.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
