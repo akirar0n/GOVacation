@@ -10,14 +10,6 @@
                     </div>
                 </div>
                 
-                <div class="col-md-2 mb-4 mb-md-0">
-                    <h5 class="footer-title">Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="IndexAdm.php"><i class="bi bi-house-door"></i> Início</a></li>
-                        <li><a href="ListarLocs.php"><i class="bi bi-building"></i> Propriedades</a></li>
-                    </ul>
-                </div>
-                
                 <div class="col-md-3 mb-4 mb-md-0">
                     <h5 class="footer-title">Contato</h5>
                     <ul class="list-unstyled">
