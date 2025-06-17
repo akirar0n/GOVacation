@@ -72,13 +72,17 @@ class ClassLocsDAO {
             $stmt->bindValue(9, $loc->getIdloc(), PDO::PARAM_INT);
 
             $stmt->execute();
-            return true; 
-
-            } catch (PDOException $exc) {
-                echo $exc->getMessage();
-                return false;
-            }
+            if ($stmt->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (PDOException $exc) {
+        echo "<div class='alert alert-danger'>Erro ao atualizar o equipamento: " . $exc->getMessage() . "</div>";
+        return false;
     }
+}
+
 
     public function listarLocs()
     {
@@ -105,6 +109,22 @@ class ClassLocsDAO {
             return TRUE;
         } catch (PDOException $ex) {
             echo $ex->getMessage();
+        }
+    }
+
+    public function atualizarDisponibilidade($idloc, $status)
+    {
+        try {
+            $pdo = Conexao::getInstance();
+            $sql = "UPDATE locacoes SET disp = ? WHERE idloc = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(1, $status, PDO::PARAM_STR);
+            $stmt->bindValue(2, $idloc, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $exc) {
+            error_log("Erro ao atualizar disponibilidade: " . $exc->getMessage());
+            return false;
         }
     }
 }

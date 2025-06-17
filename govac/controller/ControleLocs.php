@@ -2,6 +2,7 @@
 require '../model/ClassLocs.php';
 require '../model/DAO/ClassLocsDAO.php';
 
+$idloc = $_POST['idloc'] ?? null; 
 $tipoloc = $_POST['tipoloc'] ?? null;
 $titulo = $_POST['titulo'] ?? null;
 $imagem = $_POST['imagem'] ?? null;
@@ -14,6 +15,7 @@ $acao = $_GET['ACAO'] ?? null;
 
 $loc = new ClassLocs();
 
+$loc->setIdloc($idloc); 
 $loc->setTipoloc($tipoloc);
 $loc->setTitulo($titulo);
 $loc->setImagem($imagem);
@@ -26,17 +28,17 @@ $loc->setDisp($disp);
 $ClassLocsDAO = new ClassLocsDAO();
 
 switch ($acao) {
-    case 'cadastrarLocs':
+    case "cadastrarLocs":
         $resultado = $ClassLocsDAO->cadastrarLocs($loc);
         if ($resultado >= 1) {
-            header("Location:../CadLocs.php?&MSG=Cadastro de locação realizado com sucesso!");
+            header('Location:../CadLocs.php?&MSG=Cadastro de locação realizado com sucesso!');
         } else {
             header('Location:../CadLocs.php?&MSG=Não foi possível realizar o cadastro da locação!');
         }
         break;
 
-    case 'alterarLocs':
-        $resultado = $ClassLocsDAO->alterarLocs($loc);
+    case "alterarLocs":
+        $resultado = $ClassLocsDAO->alterarLocs($loc); 
         if ($resultado == 1) {
             header('Location:../ListarLocs.php?&MSG= Locação atualizada com sucesso!');
         } else {
@@ -44,11 +46,10 @@ switch ($acao) {
         }
         break;
 
-    case 'excluirLocs':
+    case "excluirLocs":
         if (isset($_GET['idloc'])) {
             $idloc = $_GET['idloc'];
-            $classLocsDAO = new ClassLocsDAO();
-            $resultado = $classLocsDAO->excluirLocs($idloc);
+            $resultado = $ClassLocsDAO->excluirLocs($idloc);
             if ($resultado == TRUE) {
                 header('Location:../ListarLocs.php?&MSG= Locação excluida com sucesso!');
             } else {

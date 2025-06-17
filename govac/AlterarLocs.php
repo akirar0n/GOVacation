@@ -1,7 +1,32 @@
 <?php
 include 'IndexAdm.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+require './model/DAO/Conexao.php';
+
+if (!isset($_GET['idloc'])) {
+    die("<div class='container mt-5'><div class='alert alert-danger'>Erro: ID da locação não informado!</div></div>");
+}
+
+$idloc = $_GET['idloc'];
+$pdo = Conexao::getInstance();
+
+try {
+    $sql = "SELECT * FROM locacoes WHERE idloc = :idloc";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':idloc', $idloc, PDO::PARAM_INT);
+    $stmt->execute();
+    $loc = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$loc) {
+        die("<div class='container mt-5'><div class='alert alert-danger'>Erro: Locação não encontrada!</div></div>");
+    }
+} catch (PDOException $e) {
+    die("<div class='container mt-5'><div class='alert alert-danger'>Erro na consulta: " . $e->getMessage() . "</div></div>");
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +38,7 @@ include 'IndexAdm.php';
     <title>Alterar locações</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
             --primary-color: #3498db;
@@ -64,14 +90,14 @@ include 'IndexAdm.php';
             margin-bottom: 0.5rem;
         }
         
-        .form-control {
+        .form-control, .form-select {
             border-radius: 8px;
             padding: 10px 15px;
             border: 1px solid #ced4da;
             transition: all 0.3s;
         }
         
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
         }
@@ -79,18 +105,22 @@ include 'IndexAdm.php';
         .btn-submit {
             background-color: var(--primary-color);
             border: none;
-            padding: 10px 25px;
+            padding: 12px 25px;
             font-weight: 500;
             letter-spacing: 0.5px;
             border-radius: 8px;
             transition: all 0.3s;
-            width: 100%;
+            width: auto;
             margin-top: 1rem;
         }
         
         .btn-submit:hover {
             background-color: var(--secondary-color);
             transform: translateY(-2px);
+        }
+
+        .btn-voltar {
+            margin-top: 1rem;
         }
         
         .form-group {
@@ -101,16 +131,16 @@ include 'IndexAdm.php';
             position: relative;
         }
         
+        .input-icon .form-control {
+            padding-left: 40px;
+        }
+        
         .input-icon i {
             position: absolute;
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--primary-color);
-        }
-        
-        .input-icon input {
-            padding-left: 40px;
         }
         
         @media (max-width: 768px) {
@@ -123,112 +153,94 @@ include 'IndexAdm.php';
 </head>
 
 <body>
-    <?php 
-    require './model/ClassLocs.php';
-        require './model/DAO/ClassLocsDAO.php';
-        
-        if (isset($_GET['idloc'])) {
-            $idloc = $_GET['idloc'];
-            
-            $ClassLocsDAO = new ClassLocsDAO();
-            $loc = $ClassLocsDAO->buscarLocs($idloc);
-
-            if (!$loc) {
-                echo "<div class='alert alert-danger'>Locação não encontrada!</div>";
-                exit;
-            }
-        } else {
-            echo "<div class='alert alert-danger'>ID da locação não fornecido!</div>";
-            exit;
-        }
-    ?>
-
     <div class="container">
         <div class="card-form-container">
-            <form method="POST" action="./controller/ControleLocs.php?ACAO=alterarLocs">
-                <h1 class="form-title">Alterar Locações</h1>
-                <input type="hidden" name="idloc" value="<?php echo htmlspecialchars($loc->getIdloc()); ?>">
+            <h1 class="form-title">Alterar Locação</h1>
+            
+            <form id="alterarForm" method="POST" action="./controller/ControleLocs.php?ACAO=alterarLocs">
                 
+                <input type="hidden" name="idloc" value="<?php echo htmlspecialchars($loc['idloc']); ?>">
 
-                <div class="form-group">
-                    <label for="tipoloc" class="form-label">Tipo loc</label>
-                    <input type="text" class="form-control" id="tipoloc" name="tipoloc" value="<?php echo htmlspecialchars($loc->getTipoloc()); ?>">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="tipoloc" class="form-label">Tipo de Locação</label>
+                        <input type="text" class="form-control" id="tipoloc" name="tipoloc" value="<?php echo htmlspecialchars($loc['tipoloc']); ?>" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="titulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" value="<?php echo htmlspecialchars($loc['titulo']); ?>" required>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="titulo" class="form-label">Título</label>
-                    <input type="text" class="form-control" id="titulo" name="titulo" value="<?php echo htmlspecialchars($loc->getTitulo()); ?>">
-                </div>
-                
+
                 <div class="form-group">
                     <label for="imagem" class="form-label">Imagem (URL)</label>
                     <div class="input-icon">
                         <i class="fas fa-image"></i>
-                        <input type="text" class="form-control" id="imagem" name="imagem" value="<?php echo htmlspecialchars($loc->getImagem()); ?>">
+                        <input type="url" class="form-control" id="imagem" name="imagem" value="<?php echo htmlspecialchars($loc['imagem']); ?>" required>
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="descr" class="form-label">Descrição</label>
-                    <textarea class="form-control" id="descr" name="descr" rows="3"><?php echo htmlspecialchars($loc->getDescr()); ?></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="preco" class="form-label">Preço</label>
-                    <div class="input-icon">
-                        <i class="fas fa-dollar-sign"></i>
-                        <input type="text" class="form-control" id="preco" name="preco" value="<?php echo htmlspecialchars($loc->getPreco()); ?>">
-                    </div>
+                    <label for="descr" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descr" name="descr" rows="3" required><?php echo htmlspecialchars($loc['descr']); ?></textarea>
                 </div>
-                
+
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="localizacao" class="form-label">Localização</label>
-                            <div class="input-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <input type="text" class="form-control" id="localizacao" name="localizacao" value="<?php echo htmlspecialchars($loc->getLocalizacao()); ?>">
-                            </div>
+                    <div class="col-md-6 form-group">
+                        <label for="preco" class="form-label">Preço</label>
+                        <div class="input-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                            <input type="number" step="0.01" class="form-control" id="preco" name="preco" value="<?php echo htmlspecialchars($loc['preco']); ?>" required>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="qtdhospedes" class="form-label">Hóspedes</label>
-                            <div class="input-icon">
-                                <i class="fas fa-users"></i>
-                                <input type="number" class="form-control" id="qtdhospedes" name="qtdhospedes" value="<?php echo htmlspecialchars($loc->getQtdhospedes()); ?>">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="disp" class="form-label">Disponibilidade</label>
-                            <select class="form-control" id="disp" name="disp">
-                                <option value="1" <?php echo htmlspecialchars($loc->getDisp()) == 1 ? 'selected' : ''; ?>>Disponível</option>
-                                <option value="0" <?php echo htmlspecialchars($loc->getDisp()) == 0 ? 'selected' : ''; ?>>Indisponível</option>
-                            </select>
+                    <div class="col-md-6 form-group">
+                        <label for="localizacao" class="form-label">Localização</label>
+                        <div class="input-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" class="form-control" id="localizacao" name="localizacao" value="<?php echo htmlspecialchars($loc['localizacao']); ?>" required>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="qtdhospedes" class="form-label">Máximo de Hóspedes</label>
+                        <div class="input-icon">
+                            <i class="fas fa-users"></i>
+                            <input type="number" class="form-control" id="qtdhospedes" name="qtdhospedes" value="<?php echo htmlspecialchars($loc['qtdhospedes']); ?>" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="disp" class="form-label">Disponibilidade</label>
+                        <select class="form-select" id="disp" name="disp" required>
+                            <option value="Disponível" <?php echo ($loc['disp'] == 'Disponível') ? 'selected' : ''; ?>>Disponível</option>
+                            <option value="Indisponível" <?php echo ($loc['disp'] == 'Indisponível') ? 'selected' : ''; ?>>Indisponível</option>
+                            <option value="Ocupado" <?php echo ($loc['disp'] == 'Ocupado') ? 'selected' : ''; ?>>Ocupado</option>
+                        </select>
+                    </div>
+                </div>
                 
-                <button type="submit" class="btn btn-primary btn-submit">
-                    <i class="fas fa-save me-2"></i>Salvar Alterações
-                </button>
-                <a href="ListarLocs.php" class="btn btn-light btn-sm">
-            <i class="bi bi-arrow-left"></i> Voltar
-        </a>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fas fa-save me-2"></i>Salvar Alterações
+                    </button>
+                    <a href="ListarLocs.php" class="btn btn-light btn-voltar">
+                        <i class="bi bi-arrow-left"></i> Voltar
+                    </a>
+                </div>
             </form>
         </div>
     </div>
-
+    
+    <?php include 'footer.php'; ?>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.getElementById('alterarForm').addEventListener('submit', function(e) {
             if (!confirm('Tem certeza que deseja alterar esta locação?')) {
-                e.preventDefault();
+                e.preventDefault(); 
             }
         });
     </script>
-    <?php include 'footer.php';?>
 </body>
 </html>
