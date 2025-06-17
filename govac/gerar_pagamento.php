@@ -14,12 +14,15 @@ $idusuario = $_SESSION['idusuario'];
 
 require './model/DAO/ClassLocsDAO.php';
 require './model/ClassLocs.php';
+
 $classLocsDAO = new ClassLocsDAO();
 $locacao = $classLocsDAO->buscarLocs($idloc);
 
 if (!$locacao || $locacao->getDisp() !== 'Disponível') {
-    die("Desculpe, esta locação não está mais disponível.");
+    die("Desculpe, esta locação não está mais disponível ou já possui uma reserva pendente.");
 }
+
+$classLocsDAO->atualizarDisponibilidade($idloc, 'Pendente');
 
 $accessToken = "APP_USR-2785755992350479-061500-001b96da1b4181d0713fdb3aa54e88bb-2493416496";
 
@@ -35,11 +38,11 @@ $paymentData = [
         'unit_price' => floatval($locacao->getPreco())
     ]],
     'back_urls' => [
-        'success' => 'https://4300-191-223-221-143.ngrok-free.app//Projeto-GOVacation/govac/reserva_sucesso.php',
+        'success' => 'https://4300-191-223-221-143.ngrok-free.app/Projeto-GOVacation/govac/reserva_sucesso.php', 
         // INSERIR LINK NOVO DO NGROK TODA VEZ QUE INICIAR ELE
-        'failure' => 'https://4300-191-223-221-143.ngrok-free.app//Projeto-GOVacation/govac/reserva_falha.php',
+        'failure' => 'https://4300-191-223-221-143.ngrok-free.app/Projeto-GOVacation/govac/reserva_falha.php', 
         // INSERIR LINK NOVO DO NGROK TODA VEZ QUE INICIAR ELE
-        'pending' => 'https://4300-191-223-221-143.ngrok-free.app//Projeto-GOVacation/govac/reserva_pendente.php'
+        'pending' => 'https://4300-191-223-221-143.ngrok-free.app/Projeto-GOVacation/govac/reserva_pendente.php' 
         // INSERIR LINK NOVO DO NGROK TODA VEZ QUE INICIAR ELE
     ],
     'notification_url' => 'https://4300-191-223-221-143.ngrok-free.app/Projeto-GOVacation/govac/confirmar_pagamento.php', 
@@ -62,5 +65,6 @@ if (isset($responseData['init_point'])) {
     header("Location: " . $responseData['init_point']);
     exit();
 } else {
+    $classLocsDAO->atualizarDisponibilidade($idloc, 'Disponível');
     echo "<h2>Erro ao criar preferência de pagamento</h2><pre>"; print_r($responseData); echo "</pre>"; die();
 }

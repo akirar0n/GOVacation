@@ -38,6 +38,12 @@ switch ($acao) {
         break;
 
     case "alterarLocs":
+
+        if ( (int)$qtdhospedes < 1 ) {
+            header('Location:../AlterarLocs.php?idloc=' . $idloc . '&error=invalid_guests');
+            exit(); 
+        }
+
         $resultado = $ClassLocsDAO->alterarLocs($loc); 
         if ($resultado == 1) {
             header('Location:../ListarLocs.php?&MSG= Locação atualizada com sucesso!');

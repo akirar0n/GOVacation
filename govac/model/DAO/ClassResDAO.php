@@ -37,4 +37,35 @@ class ClassResDAO {
             return false;
         }
     }
+
+    public function listarHistorico($idusuario) {
+        try {
+            $pdo = Conexao::getInstance();
+            $sql = "SELECT 
+                        r.idreserva, 
+                        r.datacheckin, 
+                        r.datacheckout, 
+                        r.metodopag,
+                        l.titulo, 
+                        l.imagem, 
+                        l.localizacao
+                    FROM 
+                        reservas AS r
+                    JOIN 
+                        locacoes AS l ON r.idloc = l.idloc
+                    WHERE 
+                        r.idusuario = ?
+                    ORDER BY 
+                        r.datacheckin DESC";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(1, $idusuario, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exc) {
+            error_log($exc->getMessage());
+            return []; 
+        }
+    }
 }

@@ -19,17 +19,14 @@ $nomeUsuario = $_SESSION['nome'] ?? 'Cliente';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
-        body {
-            background-color: #f8f9fa;
+        body { background-color: #f8f9fa; }
+        .navbar { 
+            background-color: #343a40; box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
         }
-        .navbar {
-            background-color: #343a40;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .navbar-brand { 
+            font-weight: bold; 
         }
-        .navbar-brand {
-            font-weight: bold;
-        }
-        .nav-link i {
+        .nav-link i { 
             margin-right: 0.5rem;
         }
         .welcome-panel {
@@ -79,14 +76,16 @@ $nomeUsuario = $_SESSION['nome'] ?? 'Cliente';
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="BuscarLocs.php">
-                            <i class="bi bi-search"></i> Buscar Locações
-                        </a>
+                        <a class="nav-link" href="BuscarLocs.php"><i class="bi bi-search"></i> Buscar Locações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.php">
-                            <i class="bi bi-box-arrow-right"></i> Sair
-                        </a>
+                        <a class="nav-link" href="HistoricoReservas.php"><i class="bi bi-journal-text"></i> Minhas Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="AlterarUser.php"><i class="bi bi-person-circle"></i> Meus Dados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right"></i> Sair</a>
                     </li>
                 </ul>
             </div>
@@ -108,7 +107,7 @@ $nomeUsuario = $_SESSION['nome'] ?? 'Cliente';
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

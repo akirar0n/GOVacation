@@ -113,7 +113,7 @@ include 'IndexAdm.php';
                         <label for="qtdhospedes" class="form-label">Máx. de Hóspedes</label>
                         <div class="input-icon">
                             <i class="fas fa-users"></i>
-                            <input type="number" name="qtdhospedes" class="form-control" id="qtdhospedes" required>
+                            <input type="number" min="1" name="qtdhospedes" class="form-control" id="qtdhospedes" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -138,5 +138,23 @@ include 'IndexAdm.php';
     </div>
     <?php include 'footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+            const qtdHospedes = document.getElementById('qtdhospedes').value;
+            const preco = document.getElementById('preco').value;
+
+            if (parseFloat(preco) <= 0) {
+                alert('O preço deve ser um valor positivo.');
+                e.preventDefault();
+                return;
+            }
+
+            if (parseInt(qtdHospedes, 10) < 1) {
+                alert('A quantidade de hóspedes não pode ser menor que 1.');
+                e.preventDefault(); 
+                return;
+            }
+        });
+    </script>
 </body>
 </html>

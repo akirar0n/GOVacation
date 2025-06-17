@@ -25,6 +25,16 @@ $locacoes = $classLocsDAO->listarLocs();
         .price-tag small { font-size: 0.9rem; font-weight: 400; color: #6c757d; }
         .icon-text { display: inline-flex; align-items: center; margin-right: 1.5rem; color: #6c757d; }
         .icon-text i { margin-right: 0.5rem; }
+        .btn-whatsapp {
+            background-color: #25D366;
+            border-color: #25D366;
+            color: white;
+        }
+        .btn-whatsapp:hover {
+            background-color: #1DA851;
+            border-color: #1DA851;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +55,9 @@ $locacoes = $classLocsDAO->listarLocs();
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-auto">
                             <div class="price-tag">R$<?php echo number_format($loc['preco'], 2, ',', '.'); ?><small>/noite</small></div>
+                            <a href="https://wa.me/+5561995008900" class="btn btn-whatsapp me-2" title="Contatar">
+                                <i class="bi bi-whatsapp"></i>
+                            </a>
                             <?php if ($loc['disp'] == 'Disponível'): ?>
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservaModal" data-idloc="<?php echo $loc['idloc']; ?>">
                                     <i class="bi bi-calendar-check me-1"></i> Reservar

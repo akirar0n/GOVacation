@@ -79,19 +79,16 @@ $nomeUsuario = $_SESSION['nome'] ?? 'Admin';
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="CadLocs.php">
-                            <i class="bi bi-house-add"></i> Nova Locação
-                        </a>
+                        <a class="nav-link" href="CadLocs.php"><i class="bi bi-house-add"></i> Nova Locação</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ListarLocs.php">
-                            <i class="bi bi-list-ul"></i> Manter Locações
-                        </a>
+                        <a class="nav-link" href="ListarLocs.php"><i class="bi bi-list-ul"></i> Manter Locações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.php">
-                            <i class="bi bi-box-arrow-right"></i> Sair
-                        </a>
+                        <a class="nav-link" href="AlterarUser.php"><i class="bi bi-person-circle"></i> Meus Dados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right"></i> Sair</a>
                     </li>
                 </ul>
             </div>

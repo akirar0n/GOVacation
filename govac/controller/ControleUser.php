@@ -2,15 +2,17 @@
 require '../model/ClassUser.php';
 require '../model/DAO/ClassUserDAO.php';
 
+$acao = $_GET['ACAO'] ?? $_POST['ACAO'] ?? null;
+$idusuario = $_POST['idusuario'] ?? null;
 $email = $_POST['email'] ?? null;
 $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT) ?? null;
 $nome = $_POST['nome'] ?? null;
 $cpf = $_POST['cpf'] ?? null;
 $endereco = $_POST['endereco'] ?? null;
 $telefone = $_POST['telefone'] ?? null;
-$acao = $_GET['ACAO'] ?? null;
 
 $novoUsuario = new ClassUser();
+$novoUsuario->setIdusuario($idusuario);
 $novoUsuario->setEmail($email);
 $novoUsuario->setSenha($senha);
 $novoUsuario->setNome($nome);
@@ -40,11 +42,14 @@ switch ($acao) {
         break;
 
     case 'alterarUser':
-        $usuario = $ClassUserDAO->alterarUser($usuario);
-        if ($usuario == 1) {
-            header('Location:../ListarUser.php?&MSG= Cliente atualizado com sucesso!');
+        session_start();
+        $resultado = $ClassUserDAO->alterarUser($novoUsuario);
+        $redirectPage = ($_SESSION['tipousuario'] == 1) ? 'IndexAdm.php' : 'IndexCliente.php';
+        
+        if ($resultado) {
+            header("Location:../$redirectPage?msg=success");
         } else {
-            header('Location:../ListarUser.php?&MSG= Não foi possível atualizar os dados do cliente!');
+            header("Location:../$redirectPage?msg=error");
         }
         break;
 

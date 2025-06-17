@@ -45,30 +45,15 @@ class ClassUserDAO {
     public function buscarUser($idusuario)
     {
         try {
-            $usuario = new ClassUser();
             $pdo = Conexao::getInstance();
-            $sql = "SELECT tipousuario, email, senha, nome, cpf, endereco, telefone FROM usuario WHERE idusuario =:idusuario LIMIT 1";
+            $sql = "SELECT idusuario, email, nome, cpf, endereco, telefone FROM usuario WHERE idusuario = ? LIMIT 1";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':idusuario', $idusuario);
-
+            $stmt->bindValue(1, $idusuario, PDO::PARAM_INT);
             $stmt->execute();
-            $userAssoc = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($userAssoc) {
-                $usuario->getTipousuario($userAssoc['tipousuario']);
-                $usuario->getEmail($userAssoc['email']);
-                $usuario->getSenha($userAssoc['senha']);
-                $usuario->getNome($userAssoc['nome']);
-                $usuario->getCpf($userAssoc['cpf']);
-                $usuario->getEndereco($userAssoc['endereco']);
-                $usuario->getTelefone($userAssoc['telefone']);
-
-                return $usuario;
-            }
-
-            return $usuario;
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $exc) {
-            return $exc->getMessage();
+            error_log($exc->getMessage());
+            return null;
         }
     }
 
@@ -76,15 +61,30 @@ class ClassUserDAO {
     {
         try {
             $pdo = Conexao::getInstance();
-            $sql = "UPDATE usuario SET email = ?, senha = ?, endereco = ?, telefone = ? WHERE idusuario=? ";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(1, $altUser->getEmail());
-            $stmt->bindValue(2, $altUser->getSenha());
-            $stmt->bindValue(3, $altUser->getEndereco());
-            $stmt->bindValue(4, $altUser->getTelefone());
-            return $stmt->rowCount();
+            
+            if (!empty($altUser->getSenha())) {
+                $sql = "UPDATE usuario SET email = ?, senha = ?, endereco = ?, telefone = ? WHERE idusuario = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindValue(1, $altUser->getEmail());
+                $stmt->bindValue(2, password_hash($altUser->getSenha(), PASSWORD_DEFAULT)); // Hash da nova senha
+                $stmt->bindValue(3, $altUser->getEndereco());
+                $stmt->bindValue(4, $altUser->getTelefone());
+                $stmt->bindValue(5, $altUser->getIdusuario(), PDO::PARAM_INT);
+            } else {
+                $sql = "UPDATE usuario SET email = ?, endereco = ?, telefone = ? WHERE idusuario = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindValue(1, $altUser->getEmail());
+                $stmt->bindValue(2, $altUser->getEndereco());
+                $stmt->bindValue(3, $altUser->getTelefone());
+                $stmt->bindValue(4, $altUser->getIdusuario(), PDO::PARAM_INT);
+            }
+            
+            $stmt->execute();
+            return $stmt->rowCount() > 0;
+
         } catch (PDOException $exc) {
             echo $exc->getMessage();
+            return false;
         }
     }
 

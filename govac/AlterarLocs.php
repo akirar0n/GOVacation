@@ -207,7 +207,7 @@ try {
                         <label for="qtdhospedes" class="form-label">Máximo de Hóspedes</label>
                         <div class="input-icon">
                             <i class="fas fa-users"></i>
-                            <input type="number" class="form-control" id="qtdhospedes" name="qtdhospedes" value="<?php echo htmlspecialchars($loc['qtdhospedes']); ?>" required>
+                            <input type="number" class="form-control" id="qtdhospedes" name="qtdhospedes" value="<?php echo htmlspecialchars($loc['qtdhospedes']); ?>" required min="1">
                         </div>
                     </div>
                     <div class="col-md-6 form-group">
@@ -236,6 +236,13 @@ try {
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const qtdHospedes = document.getElementById('qtdhospedes').value;
+            if (parseInt(qtdHospedes, 10) < 1) {
+                alert('A quantidade de hóspedes não pode ser menor que 1.');
+                e.preventDefault(); 
+                return; 
+            }
+
         document.getElementById('alterarForm').addEventListener('submit', function(e) {
             if (!confirm('Tem certeza que deseja alterar esta locação?')) {
                 e.preventDefault(); 
