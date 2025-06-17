@@ -62,9 +62,6 @@
 
 <body class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
     <div class="auth-container">
-        <div class="auth-logo">
-            <i class="bi bi-shield-lock"></i>
-        </div>
         <h2 class="auth-title">Bem-vindo ao GOVac</h2>
 
         <a href="Cadastro.php" class="btn btn-primary auth-btn">
