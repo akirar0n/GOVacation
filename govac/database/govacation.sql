@@ -39,8 +39,8 @@ create table if not exists reservas (
 ) engine = innodb;
 
 INSERT INTO usuario (tipousuario, email, senha, nome, cpf, endereco, telefone) VALUES
-(1, 'adm1@gmail.com', 'adm1234',  'Administrador', '99988877766', 'Ceilandia/DF', '61999008877'),
-(2, 'roney.santos@email.com', 'ronzin777', 'Roney Santos', '78912345678', 'Av. Brasil, 1500 - Rio de Janeiro/RJ', '21987654321');
+(1, 'adm1@gmail.com', 'adm123',  'Administrador', '99988877766', 'Ceilandia/DF', '61999008877'),
+(2, 'roneysantos@gmail.com', 'ron123', 'Roney Santos', '78912345678', 'Av. Brasil, 1500 - Rio de Janeiro/RJ', '21987654321');
 
 INSERT INTO locacoes (tipoloc, titulo, imagem, descr, preco, localizacao, qtdhospedes, disp) VALUES
 ('Casa', 'Casa na Praia com Vista para o Mar', 'https://objectstorage.sa-saopaulo-1.oraclecloud.com/n/grq6lwb4htd1/b/tecimob-production/o/media/8f72eb8d-a912-4d7f-8729-65ca7be23356/properties/5b0dcb04-e1cd-4a3b-9da0-d0f13be6e85f/images/c360839b-090a-4b4d-8980-07872e96dfef1736741010YrqV.jpg', 'Encantadora casa a 50m da praia, com 3 quartos, piscina e vista panorâmica', 350.00, 'Rio de Janeiro - RJ', 6, 'Disponível'),
